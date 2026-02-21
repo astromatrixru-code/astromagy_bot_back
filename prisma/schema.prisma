@@ -1,18 +1,41 @@
 generator client {
   provider = "prisma-client-js"
-  output          = "../src/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum UserGender {
+  MALE
+  FEMALE
+
+  @@map("gender")
+}
+
 model User {
-  id              Int      @id @default(autoincrement())
-  telegramId      BigInt   @unique
-  username        String?
-  firstName       String?
-  lastName        String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id         Int     @id @default(autoincrement()) @map("id")
+  telegramId BigInt  @unique @map("telegram_id")
+  username   String? @map("username")
+  firstName  String? @map("first_name")
+  lastName   String? @map("last_name")
+  email      String? @unique @map("email")
+  gender     Gender  @default(MALE) @map("gender")
+
+  address   String? @map("address")
+  latitude  Float?  @map("latitude")
+  longitude Float?  @map("longitude")
+
+  birthDate DateTime? @map("birth_date")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
 }

@@ -99,6 +99,12 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   firstName: 'firstName',
   lastName: 'lastName',
+  email: 'email',
+  gender: 'gender',
+  address: 'address',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  birthDate: 'birthDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -117,7 +123,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Gender = exports.$Enums.Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+};
 
+exports.UserGender = exports.$Enums.UserGender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+};
 
 exports.Prisma.ModelName = {
   User: 'User'
@@ -130,10 +144,10 @@ const config = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id         Int      @id @default(autoincrement())\n  telegramId BigInt   @unique\n  username   String?\n  firstName  String?\n  lastName   String?\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n}\n"
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nenum Gender {\n  MALE\n  FEMALE\n}\n\nenum UserGender {\n  MALE\n  FEMALE\n\n  @@map(\"gender\")\n}\n\nmodel User {\n  id         Int     @id @default(autoincrement()) @map(\"id\")\n  telegramId BigInt  @unique @map(\"telegram_id\")\n  username   String? @map(\"username\")\n  firstName  String? @map(\"first_name\")\n  lastName   String? @map(\"last_name\")\n  email      String? @unique @map(\"email\")\n  gender     Gender  @default(MALE) @map(\"gender\")\n\n  address   String? @map(\"address\")\n  latitude  Float?  @map(\"latitude\")\n  longitude Float?  @map(\"longitude\")\n\n  birthDate DateTime? @map(\"birth_date\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  @@map(\"users\")\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"telegramId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"id\"},{\"name\":\"telegramId\",\"kind\":\"scalar\",\"type\":\"BigInt\",\"dbName\":\"telegram_id\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"username\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"first_name\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"last_name\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"email\"},{\"name\":\"gender\",\"kind\":\"enum\",\"type\":\"Gender\",\"dbName\":\"gender\"},{\"name\":\"address\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"address\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\",\"dbName\":\"latitude\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\",\"dbName\":\"longitude\"},{\"name\":\"birthDate\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"birth_date\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"}],\"dbName\":\"users\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
       getRuntime: async () => require('./query_compiler_fast_bg.js'),

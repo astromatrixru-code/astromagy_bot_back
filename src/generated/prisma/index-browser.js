@@ -126,6 +126,12 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   firstName: 'firstName',
   lastName: 'lastName',
+  email: 'email',
+  gender: 'gender',
+  address: 'address',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  birthDate: 'birthDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -144,7 +150,10 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.Gender = exports.$Enums.Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+};
 
 exports.Prisma.ModelName = {
   User: 'User'
